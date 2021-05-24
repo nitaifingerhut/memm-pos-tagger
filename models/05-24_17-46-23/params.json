@@ -1,0 +1,22 @@
+{
+    "train_file": "assets/train2.wtag",
+    "force": false,
+    "test_file": "assets/train2.wtag",
+    "name": "05-24_17-46-23",
+    "features_params": {
+        "pairs": 10,
+        "unigrams": 10,
+        "bigrams": 10,
+        "trigrams": 10,
+        "prefixes": 10,
+        "suffixes": 10,
+        "prev_w_curr_t": 10,
+        "next_w_curr_t": 10
+    },
+    "epochs": 100,
+    "print_every": 50,
+    "reg_lambda": 0.01,
+    "beam": 2,
+    "post_processing": false,
+    "test_accuracy": 59.049029285949324
+}
