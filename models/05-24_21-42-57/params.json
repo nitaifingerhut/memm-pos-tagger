@@ -1,0 +1,22 @@
+{
+    "train_file": "assets/train1.wtag",
+    "force": false,
+    "test_file": "assets/test1.wtag",
+    "name": "05-24_21-42-57",
+    "features_params": {
+        "pairs": 50,
+        "unigrams": 50,
+        "bigrams": 250,
+        "trigrams": 500,
+        "prefixes": 50,
+        "suffixes": 50,
+        "prev_w_curr_t": 50,
+        "next_w_curr_t": 50
+    },
+    "epochs": 10000,
+    "print_every": 50,
+    "reg_lambda": 0.01,
+    "beam": 2,
+    "post_processing": false,
+    "test_accuracy": 60.64881304384557
+}
