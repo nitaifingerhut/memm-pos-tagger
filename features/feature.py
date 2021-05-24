@@ -2,6 +2,7 @@ import abc
 import sys
 
 from utils.history import History
+from utils.general import is_digit
 import inspect
 
 
@@ -32,7 +33,7 @@ class PairFeature(object):
         return history.words[history.index] == self.word and history.tags[-1] == self.tag
 
     def __str__(self):
-        pair_str = f"word={self.word}, tag={self.tag}"
+        pair_str = f"word = {self.word}, tag = {self.tag}"
         return self.__class__.__name__ + ": " + pair_str
 
 
@@ -98,84 +99,62 @@ class SuffixFeature(PreSufFeature):
 
 
 #######################################################################
-class f101(Feature):
+class Custom001(Feature):
     def __call__(self, history: History) -> int:
         w = history.words[history.index]
-        return w.endswith("ing") and history.tags[-1] == "VBG"
-
-
-class f102(Feature):
-    def __call__(self, history: History) -> int:
-        w = history.words[history.index]
-        return w.startswith("pre") and history.tags[-1] == "NN"
-
-
-class f103(Feature):
-    def __call__(self, history: History) -> int:
-        try:
-            return history.tags[-3:] == ("DT", "JJ", "Vt")
-        except IndexError:
-            return 0
-
-
-class f104(Feature):
-    def __call__(self, history: History) -> int:
-        try:
-            return history.tags[-2:] == ("JJ", "Vt")
-        except IndexError:
-            return 0
-
-
-class f105(Feature):
-    def __call__(self, history: History) -> int:
-        return history.tags[-1] == "Vt"
-
-
-class f106(Feature):
-    def __call__(self, history: History) -> int:
-        try:
-            return 1 if history.words[history.index - 1] == "the" and history.tags[-1] == "Vt" else 0
-        except IndexError:
-            return 0
-
-
-#######################################################################
-
-
-#######################################################################
-class n001(Feature):
-    def __call__(self, history: History) -> int:
-        w = history.words[history.index]
-        return 1 if w.upper()[0] == w[0] else 0
+        return w.upper()[0] == w[0]
 
     def __str__(self):
-        return f"Feature: Current Word Starts With A Capital Letter"
+        return f"Feature: current word start with a capital letter"
 
 
-class n002(Feature):
+class Custom002(Feature):
     def __call__(self, history: History) -> int:
         w = history.words[history.index]
-        return 1 if w.upper() == w else 0
+        return w.upper() == w
 
     def __str__(self):
-        return f"Feature: Current Word Consist Only Of Capital Letters"
+        return f"Feature: current word is capitalized"
 
 
-class n003(Feature):
+class Custom003(Feature):
     def __call__(self, history: History) -> int:
         w = history.words[history.index]
-        return 1 if w.isdigit() else 0
+        return is_digit(w)
 
     def __str__(self):
-        return f"Feature: Current Word Is A Digit"
+        return f"Feature: current word is a digit"
+
+
+class Custom004(Feature):
+    def __call__(self, history: History) -> int:
+        return history.index == 0
+
+    def __str__(self):
+        return f"Feature: current word is first in line"
+
+
+class Custom005(Feature):
+    def __call__(self, history: History) -> int:
+        return history.index == 1
+
+    def __str__(self):
+        return f"Feature: current word is second in line"
+
+
+class Custom006(Feature):
+    def __call__(self, history: History) -> int:
+        return history.index == 2
+
+    def __str__(self):
+        return f"Feature: current word is third in line"
 
 
 #######################################################################
 
 
 #######################################################################
-# FEATURES_DICT = {name: obj() for name, obj in
-#                  inspect.getmembers(sys.modules[__name__], inspect.isclass)
-#                  if obj.__module__ is __name__}
-# del FEATURES_DICT["Features"]
+FEATURES_DICT = {
+    name: obj() for name, obj in inspect.getmembers(sys.modules[__name__], inspect.isclass) if name.startswith("Custom")
+}
 #######################################################################

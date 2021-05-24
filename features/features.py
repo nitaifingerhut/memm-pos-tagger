@@ -3,6 +3,7 @@ from utils.history import History
 from features.feature import (
     BiGramFeature,
     Feature,
+    FEATURES_DICT,
     PairFeature,
     PrefixFeature,
     SuffixFeature,
@@ -81,6 +82,7 @@ class Features(object):
         self.features.extend(self.from_suffixes(data["f_suffixes"]))
         self.features.extend(self.from_prev_w_curr_t(data["f_prev_w_curr_t"]))
         self.features.extend(self.from_next_w_curr_t(data["f_next_w_curr_t"]))
+        self.features.extend(list(FEATURES_DICT.values()))
 
     def __str__(self) -> str:
         return f"Features:: {len(self.features)} features"

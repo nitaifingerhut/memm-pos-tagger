@@ -29,13 +29,11 @@ class DatasetCreator(object):
             features = []
             for q, line in enumerate(f.readlines()):
                 pairs = [tuple(s.split("_")) for s in line.split()]
-                words = self.offset * ("*",) + list(zip(*pairs))[0]
+                words = list(zip(*pairs))[0]
                 tags = self.offset * ("*",) + list(zip(*pairs))[1]
 
-                for i in range(self.offset, len(words)):
-                    curr_tags = (
-                        tags[(i - self.offset) : i + 1] if tag == "REAL" else tags[(i - self.offset) : i] + (tag,)
-                    )
+                for i in range(len(words)):
+                    curr_tags = tags[i : i + self.offset + 1] if tag == "REAL" else tags[i : i + self.offset] + (tag,)
                     history = History(words, curr_tags, i)
                     features.append(self.features.to_vec(history))
 

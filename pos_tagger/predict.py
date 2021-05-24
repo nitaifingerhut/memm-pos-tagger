@@ -5,6 +5,7 @@ import warnings
 from features.features import Features
 from typing import Dict, List, Tuple
 from utils.history import History
+from utils.general import is_digit, NUMBERS, PUNCTUATION
 
 
 class Predictor(object):
@@ -111,11 +112,9 @@ class Predictor(object):
     def post_processing(sentence: Tuple, pred_tags: Tuple):
         processed_tags = ()
         for w, t in zip(sentence, pred_tags):
-            if w == ".":
-                t = "."
-            if w == ",":
-                t = ","
-            if w.isdigit():
+            if w in PUNCTUATION.keys():
+                t = PUNCTUATION[w]
+            if is_digit(w) or w in NUMBERS:
                 t = "CD"
             processed_tags += (t,)
         return processed_tags
