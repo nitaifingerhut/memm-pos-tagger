@@ -2,21 +2,21 @@
     "train_file": "assets/train1.wtag",
     "force": false,
     "test_file": "assets/test1.wtag",
-    "name": "05-24_19-09-24",
+    "name": "05-25_00-42-25",
     "features_params": {
-        "pairs": 50,
+        "pairs": 250,
         "unigrams": 50,
         "bigrams": 250,
         "trigrams": 500,
-        "prefixes": 50,
-        "suffixes": 50,
+        "prefixes": 100,
+        "suffixes": 100,
         "prev_w_curr_t": 50,
         "next_w_curr_t": 50
     },
-    "epochs": 250,
+    "epochs": 5000,
     "print_every": 50,
     "reg_lambda": 0.01,
     "beam": 2,
-    "post_processing": false,
-    "test_accuracy": 59.63081861958266
+    "post_processing": true,
+    "test_accuracy": 73.18577342231984
 }
