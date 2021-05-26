@@ -104,16 +104,19 @@ class IndexFeature(Feature):
     def __init__(self, prams):
         self.check = prams[0]
         self.inx = prams[1]
+    def __str__(self):
+        tags_str = self.check + ", " + str(self.inx)
+        return self.__class__.__name__ + ": " + tags_str
 
-class IndexTagFeature(Feature):
+class IndexTagFeature(IndexFeature):
+    def __call__(self, history: History) -> int:
+        t = history.tags[-1]
+        return t == self.check and history.index == self.inx
+
+class IndexWordFeature(IndexFeature):
     def __call__(self, history: History) -> int:
         w = history.words[history.index]
-        return history.tags[-1] == self.check and history.index == self.inx
-
-class IndexWordFeature(Feature):
-    def __call__(self, history: History) -> int:
-        w = history.words[history.index]
-        return history.words[history.index] == self.check and history.index == self.inx
+        return w == self.check and history.index == self.inx
 
 #######################################################################
 

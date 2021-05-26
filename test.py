@@ -8,16 +8,16 @@ from utils.parser import Parser
 if __name__ == "__main__":
 
     opts = Parser.parse()
-    opts.features_params["pairs"] = 100
+    opts.features_params["pairs"] = 250
     opts.features_params["unigrams"] = 50
-    opts.features_params["bigrams"] = 100
-    opts.features_params["trigrams"] = 100
-    opts.features_params["prefixes"] = 20
-    opts.features_params["suffixes"] = 20
-    opts.features_params["prev_w_curr_t"] = 50
-    opts.features_params["next_w_curr_t"] = 50
-    opts.features_params["indextagfeatures"] = 50
-    opts.features_params["indexwordfeatures"] = 50
+    opts.features_params["bigrams"] = 250
+    opts.features_params["trigrams"] = 500
+    opts.features_params["prefixes"] = 100
+    opts.features_params["suffixes"] = 100
+    opts.features_params["prev_w_curr_t"] = 150
+    opts.features_params["next_w_curr_t"] = 150
+    opts.features_params["indextagfeatures"] = 150
+    opts.features_params["indexwordfeatures"] = 150
     opts.force = False
     opts.epochs = 500
     opts.post_processing = True
