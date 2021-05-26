@@ -18,7 +18,7 @@ if __name__ == "__main__":
     opts.features_params["next_w_curr_t"] = 150
     opts.features_params["indextagfeatures"] = 150
     opts.features_params["indexwordfeatures"] = 150
-    opts.force = True
+    opts.force = False
     opts.epochs = 500
     opts.post_processing = True
     opts.beam = 2

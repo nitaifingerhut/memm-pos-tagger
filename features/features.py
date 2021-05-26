@@ -82,6 +82,7 @@ class Features(object):
             features.append(IndexTagFeature(indextagfeature))
         return features
 
+    @staticmethod
     def from_indexwordfeature(indexwordfeatures):
         features = []
         for indexwordfeature in indexwordfeatures:
