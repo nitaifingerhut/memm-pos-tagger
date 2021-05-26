@@ -64,12 +64,6 @@ class FeatureExtractor(object):
 
                 words = list(zip(*pairs))[0]
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-                prefixes2 = [w[:2] for w in words if len(w) >= 2]
-                prefixes3 = [w[:3] for w in words if len(w) >= 3]
-                prefixes4 = [w[:4] for w in words if len(w) >= 4]
-=======
                 indextagfeatures1 = [(unigrams[0], 0)]
                 indexwordfeatures1 = [(words[0], 0)]
                 if len(words)>=2:
@@ -84,12 +78,7 @@ class FeatureExtractor(object):
                 prefixes2 = [w[:2] for w in words if len(w) >= 5]
                 prefixes3 = [w[:3] for w in words if len(w) >= 6]
                 prefixes4 = [w[:4] for w in words if len(w) >= 7]
->>>>>>> Stashed changes
-=======
-                prefixes2 = [w[:2] for w in words if len(w) >= 5]
-                prefixes3 = [w[:3] for w in words if len(w) >= 6]
-                prefixes4 = [w[:4] for w in words if len(w) >= 7]
->>>>>>> daniel
+
                 fe.dicts["prefixes"] = func("prefixes", Counter(prefixes2), Counter(prefixes3), Counter(prefixes4))
 
                 suffixes2 = [w[-2:] for w in words if len(w) >= 5]
