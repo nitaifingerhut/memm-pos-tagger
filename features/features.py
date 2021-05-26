@@ -88,7 +88,6 @@ class Features(object):
             features.append(IndexWordFeature(indexwordfeature))
         return features
 
-
     def from_data(self, data):
         self.features.extend(self.from_pairs(data["f_pairs"]))
         self.features.extend(self.from_unigrams(data["f_unigrams"]))
@@ -96,8 +95,10 @@ class Features(object):
         self.features.extend(self.from_trigrams(data["f_trigrams"]))
         self.features.extend(self.from_prefixes(data["f_prefixes"]))
         self.features.extend(self.from_suffixes(data["f_suffixes"]))
-        self.features.extend(self.from_prev_w_curr_t(data["indextagfeatures"]))
-        self.features.extend(self.from_next_w_curr_t(data["indexwordfeatures"]))
+        self.features.extend(self.from_prev_w_curr_t(data["f_prev_w_curr_t"]))
+        self.features.extend(self.from_next_w_curr_t(data["f_next_w_curr_t"]))
+        self.features.extend(self.from_indextagfeature(data["f_indextagfeatures"]))
+        self.features.extend(self.from_indexwordfeature(data["f_indexwordfeatures"]))
         self.features.extend(list(FEATURES_DICT.values()))
 
     def __str__(self) -> str:
