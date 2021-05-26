@@ -62,14 +62,14 @@ class FeatureExtractor(object):
 
                 words = list(zip(*pairs))[0]
 
-                prefixes2 = [w[:2] for w in words if len(w) >= 2]
-                prefixes3 = [w[:3] for w in words if len(w) >= 3]
-                prefixes4 = [w[:4] for w in words if len(w) >= 4]
+                prefixes2 = [w[:2] for w in words if len(w) >= 5]
+                prefixes3 = [w[:3] for w in words if len(w) >= 6]
+                prefixes4 = [w[:4] for w in words if len(w) >= 7]
                 fe.dicts["prefixes"] = func("prefixes", Counter(prefixes2), Counter(prefixes3), Counter(prefixes4))
 
-                suffixes2 = [w[-2:] for w in words if len(w) >= 2]
-                suffixes3 = [w[-3:] for w in words if len(w) >= 3]
-                suffixes4 = [w[-4:] for w in words if len(w) >= 4]
+                suffixes2 = [w[-2:] for w in words if len(w) >= 5]
+                suffixes3 = [w[-3:] for w in words if len(w) >= 6]
+                suffixes4 = [w[-4:] for w in words if len(w) >= 7]
                 fe.dicts["suffixes"] = func("suffixes", Counter(suffixes2), Counter(suffixes3), Counter(suffixes4))
 
                 prev_w_curr_t = [(w, t) for w, t in zip(words[:-1], unigrams[1:])]
