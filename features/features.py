@@ -9,6 +9,8 @@ from features.feature import (
     SuffixFeature,
     TriGramFeature,
     UniGramFeature,
+    IndexTagFeature,
+    IndexWordFeature,
 )
 from typing import Iterator, List
 
@@ -73,6 +75,20 @@ class Features(object):
     def __init__(self):
         self.features = []
 
+    @staticmethod
+    def from_indextagfeature(indextagfeatures):
+        features = []
+        for indextagfeature in indextagfeatures:
+            features.append(IndexTagFeature(indextagfeature))
+        return features
+
+    def from_indexwordfeature(indexwordfeatures):
+        features = []
+        for indexwordfeature in indexwordfeatures:
+            features.append(IndexWordFeature(indexwordfeature))
+        return features
+
+
     def from_data(self, data):
         self.features.extend(self.from_pairs(data["f_pairs"]))
         self.features.extend(self.from_unigrams(data["f_unigrams"]))
@@ -80,8 +96,8 @@ class Features(object):
         self.features.extend(self.from_trigrams(data["f_trigrams"]))
         self.features.extend(self.from_prefixes(data["f_prefixes"]))
         self.features.extend(self.from_suffixes(data["f_suffixes"]))
-        self.features.extend(self.from_prev_w_curr_t(data["f_prev_w_curr_t"]))
-        self.features.extend(self.from_next_w_curr_t(data["f_next_w_curr_t"]))
+        self.features.extend(self.from_prev_w_curr_t(data["indextagfeatures"]))
+        self.features.extend(self.from_next_w_curr_t(data["indexwordfeatures"]))
         self.features.extend(list(FEATURES_DICT.values()))
 
     def __str__(self) -> str:

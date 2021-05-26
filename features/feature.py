@@ -99,6 +99,53 @@ class SuffixFeature(PreSufFeature):
 
 
 #######################################################################
+
+class IndexFeature(Feature):
+    def __init__(self, inx_tag):
+        self.tags = inx_tag[0]
+        self.inx = inx_tag[1]
+
+
+class IndexTagFeature(Feature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        return history.tags[-1] == self.tags[-1] and history.index == 0
+
+class IndexTagFeature2(Feature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        return history.tags[-1] == self.tags[-1] and history.index == 1
+
+class IndexTagFeature3(Feature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        return history.tags[-1] == self.tags[-1] and history.index == 2
+
+
+class IndexWordFeature(Feature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        return history.words[history.index] == self.word and history.index == 0
+
+
+class IndexWordFeature2(Feature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        return history.words[history.index] == self.word and history.index == 1
+
+
+class IndexWordFeature3(Feature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        return history.words[history.index] == self.word and history.index == 2
+
+
+
+
+#######################################################################
+
+
+#######################################################################
 class Custom001(Feature):
     def __call__(self, history: History) -> int:
         w = history.words[history.index]

@@ -21,10 +21,12 @@ class FeatureExtractor(object):
             "suffixes": {},
             "prev_w_curr_t": {},
             "next_w_curr_t": {},
+            "indextagfeatures": {},
+            "indexwordfeatures": {},
         }
 
     @staticmethod
-    def process(path: Path, force_process: bool = False):
+    def process(path: Path, force_process: bool = True):
         processed_path = path.with_suffix(".json")
         if not processed_path.exists() or force_process:
             fe = FeatureExtractor.extract_features(path)
@@ -62,9 +64,26 @@ class FeatureExtractor(object):
 
                 words = list(zip(*pairs))[0]
 
+<<<<<<< Updated upstream
                 prefixes2 = [w[:2] for w in words if len(w) >= 2]
                 prefixes3 = [w[:3] for w in words if len(w) >= 3]
                 prefixes4 = [w[:4] for w in words if len(w) >= 4]
+=======
+                indextagfeatures1 = [(unigrams[0], 0)]
+                indexwordfeatures1 = [(words[0], 0)]
+                if len(words)>=2:
+                    indextagfeatures2 = [(unigrams[1], 1)]
+                    indexwordfeatures2 = [(words[1], 1)]
+                if len(words)>=3:
+                    indextagfeatures3 = [(unigrams[2], 2)]
+                    indexwordfeatures3 = [(words[2], 2)]
+                fe.dicts["indextagfeatures"] = func("indextagfeatures", Counter(indextagfeatures1), Counter(indextagfeatures2), Counter(indextagfeatures3))
+                fe.dicts["indexwordfeatures"] = func("indexwordfeatures", Counter(indexwordfeatures1), Counter(indexwordfeatures2), Counter(indexwordfeatures3))
+
+                prefixes2 = [w[:2] for w in words if len(w) >= 5]
+                prefixes3 = [w[:3] for w in words if len(w) >= 6]
+                prefixes4 = [w[:4] for w in words if len(w) >= 7]
+>>>>>>> Stashed changes
                 fe.dicts["prefixes"] = func("prefixes", Counter(prefixes2), Counter(prefixes3), Counter(prefixes4))
 
                 suffixes2 = [w[-2:] for w in words if len(w) >= 2]
