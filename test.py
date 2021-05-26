@@ -16,9 +16,12 @@ if __name__ == "__main__":
     opts.features_params["suffixes"] = 20
     opts.features_params["prev_w_curr_t"] = 50
     opts.features_params["next_w_curr_t"] = 50
+<<<<<<< HEAD
     opts.features_params["indextagfeatures"] = 50
     opts.features_params["indexwordfeatures"] = 50
     opts.force = False
+=======
+>>>>>>> daniel
     opts.epochs = 500
     opts.post_processing = True
     opts.beam = 2

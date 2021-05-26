@@ -86,13 +86,13 @@ class PreSufFeature(Feature):
 class PrefixFeature(PreSufFeature):
     def __call__(self, history: History):
         w = history.words[history.index]
-        return len(w) >= self.n and w[: self.n] == self.chars
+        return len(w) >= 6 and w[: self.n] == self.chars
 
 
 class SuffixFeature(PreSufFeature):
     def __call__(self, history: History):
         w = history.words[history.index]
-        return len(w) >= self.n and w[-self.n :] == self.chars
+        return len(w) >= 6 and w[-self.n :] == self.chars
 
 
 #######################################################################
