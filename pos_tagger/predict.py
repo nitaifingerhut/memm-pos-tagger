@@ -63,7 +63,7 @@ class Predictor(object):
                     if calc_ind[i, j] == 1:
                         tags = (t_2_labels[i], t_1_labels[j], labels[q])
                         hist = History(sentence, tags, ind)
-                        f = self.features.to_vec(history=hist)
+                        f = self.features.to_vec_np(history=hist)
                         e_f[i, j, q] = np.exp(f @ self.weights)
         e_f_sum = np.sum(e_f, axis=2)
 

@@ -112,7 +112,7 @@ class FeatureExtractor(object):
 
         return fe
 
-    def filter(self, **kwargs, dot):
+    def filter(self, **kwargs):
         """
         filter top frequent features in each dictionary.
         """
@@ -120,7 +120,7 @@ class FeatureExtractor(object):
             if arg not in self.dicts.keys():
                 pass
             l = len(list(self.dicts[arg].keys()))
-            temp = list(self.dicts[arg].keys())[:min(val*dot,l)]
+            temp = list(self.dicts[arg].keys())[:min(round(val*1,0),l)]
             random.shuffle(temp)
             self.dicts["f_" + arg] = temp[:val]
 

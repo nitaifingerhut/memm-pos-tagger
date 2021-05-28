@@ -1,3 +1,5 @@
+import numpy as np
+
 from scipy.sparse import csr_matrix
 from utils.history import History
 from features.feature import (
@@ -142,3 +144,9 @@ class Features(object):
         for f in self.features:
             vec.append(f(history))
         return csr_matrix(vec, dtype=bool)
+
+    def to_vec_np(self, history: History):
+        vec = []
+        for f in self.features:
+            vec.append(f(history))
+        return np.asarray(vec).astype(np.uint8)
