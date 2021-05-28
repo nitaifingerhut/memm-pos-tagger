@@ -13,6 +13,7 @@ from features.feature import (
     UniGramFeature,
     IndexTagFeature,
     IndexWordFeature,
+    CapitalTagFeature,
 )
 from typing import Iterator, List
 
