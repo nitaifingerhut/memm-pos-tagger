@@ -20,7 +20,7 @@ class MEMM(object):
         self.dir = dir
 
         self.corpus = FeatureExtractor.process(opts.train_file, opts.force)
-        self.corpus.filter(**opts.features_params, opts.dot)
+        self.corpus.filter(**opts.features_params)
 
         self.features = Features()
         self.features.from_data(self.corpus.dicts)

@@ -1,4 +1,5 @@
 import json
+import pickle
 
 from pathlib import Path
 from pos_tagger.memm import MEMM
@@ -17,7 +18,7 @@ if __name__ == "__main__":
     opts.features_params["prev_w_curr_t"] = 50
     opts.features_params["next_w_curr_t"] = 50
     opts.features_params["indextagfeatures"] = 50
-    opts.features_params["indexwordfeatures"] = 0
+    opts.features_params["indexwordfeatures"] = 50
     opts.features_params["capitaltagfeatures"] = 50
     opts.force = False
     opts.epochs = 500
@@ -28,11 +29,10 @@ if __name__ == "__main__":
     root_dir = Path("models").joinpath(opts.name).expanduser()
     root_dir.mkdir(parents=True, exist_ok=True)
     memm = MEMM(opts, root_dir)
-    memm.fit(opts=opts)
-    _, opts.test_accuracy = memm.predict(opts.test_file, opts.beam)
+    with open(r"models\05-27_00-27-51\trained_weights_data_1.pkl", 'rb') as f:
+        weights = pickle.load(f)
+        memm.weights = weights[0]
+    memm.ds_tags = list(memm.corpus.dicts["unigrams"].keys())[:5]
+    memm.ds_tags_dict = {i: k for i, k in enumerate(memm.ds_tags)}
+    pred, opts.test_accuracy = memm.predict(opts.test_file, opts.beam)
 
-    w_path = root_dir.joinpath("params.json")
-    with open(w_path, "w") as f:
-        opts.train_file = opts.train_file.as_posix()
-        opts.test_file = opts.test_file.as_posix()
-        json.dump(vars(opts), f, indent=4)
