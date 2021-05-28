@@ -18,10 +18,13 @@ if __name__ == "__main__":
     opts.features_params["next_w_curr_t"] = 50
     opts.features_params["indextagfeatures"] = 50
     opts.features_params["indexwordfeatures"] = 50
+    opts.features_params["capitaltagfeatures"] = 50
     opts.force = False
     opts.epochs = 500
     opts.post_processing = True
     opts.beam = 2
+    opts.dot = 1.5
+
     root_dir = Path("models").joinpath(opts.name).expanduser()
     root_dir.mkdir(parents=True, exist_ok=True)
     memm = MEMM(opts, root_dir)

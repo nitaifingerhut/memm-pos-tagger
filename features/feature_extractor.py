@@ -1,6 +1,7 @@
 import functools
 import json
 import operator
+import random
 
 from collections import Counter
 from pathlib import Path
@@ -23,6 +24,7 @@ class FeatureExtractor(object):
             "next_w_curr_t": {},
             "indextagfeatures": {},
             "indexwordfeatures": {},
+            "capitaltagfeatures": {},
         }
 
     @staticmethod
@@ -75,6 +77,10 @@ class FeatureExtractor(object):
                 fe.dicts["indextagfeatures"] = func("indextagfeatures", Counter(indextagfeatures1), Counter(indextagfeatures2), Counter(indextagfeatures3))
                 fe.dicts["indexwordfeatures"] = func("indexwordfeatures", Counter(indexwordfeatures1), Counter(indexwordfeatures2), Counter(indexwordfeatures3))
 
+
+                capital_tag_features = [(w, t) for w, t in zip(words, unigrams)]
+                fe.dicts["capitaltagfeatures"] = func("capitaltagfeatures", Counter(capital_tag_features))
+
                 prefixes2 = [w[:2] for w in words if len(w) >= 5]
                 prefixes3 = [w[:3] for w in words if len(w) >= 6]
                 prefixes4 = [w[:4] for w in words if len(w) >= 7]
@@ -106,14 +112,17 @@ class FeatureExtractor(object):
 
         return fe
 
-    def filter(self, **kwargs):
+    def filter(self, **kwargs, dot):
         """
         filter top frequent features in each dictionary.
         """
         for arg, val in kwargs.items():
             if arg not in self.dicts.keys():
                 pass
-            self.dicts["f_" + arg] = list(self.dicts[arg].keys())[:val]
+            l = len(list(self.dicts[arg].keys()))
+            temp = list(self.dicts[arg].keys())[:min(val*dot,l)]
+            random.shuffle(temp)
+            self.dicts["f_" + arg] = temp[:val]
 
     def save(self, path: Path):
         data = {}
