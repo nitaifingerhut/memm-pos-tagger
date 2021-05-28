@@ -8,19 +8,19 @@ from utils.parser import Parser
 if __name__ == "__main__":
 
     opts = Parser.parse()
-    opts.features_params["pairs"] = 100
+    opts.features_params["pairs"] = 600
     opts.features_params["unigrams"] = 50
-    opts.features_params["bigrams"] = 100
-    opts.features_params["trigrams"] = 150
-    opts.features_params["prefixes"] = 25
-    opts.features_params["suffixes"] = 25
+    opts.features_params["bigrams"] = 150
+    opts.features_params["trigrams"] = 200
+    opts.features_params["prefixes"] = 50
+    opts.features_params["suffixes"] = 50
     opts.features_params["prev_w_curr_t"] = 50
     opts.features_params["next_w_curr_t"] = 50
-    opts.features_params["indextagfeatures"] = 50
+    opts.features_params["indextagfeatures"] = 100
     opts.features_params["indexwordfeatures"] = 0
     opts.features_params["capitaltagfeatures"] = 50
     opts.force = False
-    opts.epochs = 500
+    opts.epochs = 5000
     opts.post_processing = True
     opts.beam = 2
     opts.dot = 1.5
