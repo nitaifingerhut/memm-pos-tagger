@@ -118,6 +118,12 @@ class IndexWordFeature(IndexFeature):
         w = history.words[history.index]
         return w == self.check and history.index == self.inx
 
+class CapitalTagFeature(IndexFeature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        return t == self.check and w.upper()[0] == w[0]
+
+
 #######################################################################
 
 
