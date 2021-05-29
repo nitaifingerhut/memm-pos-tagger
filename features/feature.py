@@ -30,7 +30,7 @@ class PairFeature(object):
 
     @abc.abstractmethod
     def __call__(self, history: History) -> int:
-        return history.words[history.index] == self.word and history.tags[-1] == self.tag
+        return history.words[history.index].lower() == self.word and history.tags[-1] == self.tag
 
     def __str__(self):
         pair_str = f"word = {self.word}, tag = {self.tag}"
@@ -85,13 +85,13 @@ class PreSufFeature(Feature):
 
 class PrefixFeature(PreSufFeature):
     def __call__(self, history: History):
-        w = history.words[history.index]
+        w = history.words[history.index].lower()
         return len(w) >= 6 and w[: self.n] == self.chars
 
 
 class SuffixFeature(PreSufFeature):
     def __call__(self, history: History):
-        w = history.words[history.index]
+        w = history.words[history.index].lower
         return len(w) >= 6 and w[-self.n :] == self.chars
 
 
@@ -119,7 +119,7 @@ class IndexTagFeature(IndexFeature):
 
 class IndexWordFeature(IndexFeature):
     def __call__(self, history: History) -> int:
-        w = history.words[history.index]
+        w = history.words[history.index].lower()
         return w == self.check and history.index == self.inx
 
 
