@@ -1,0 +1,24 @@
+{
+    "train_file": "assets/train1.wtag",
+    "force": false,
+    "test_file": "assets/test1.wtag",
+    "name": "light_l_1_b_5",
+    "features_params": {
+        "pairs": 50,
+        "unigrams": 50,
+        "bigrams": 250,
+        "trigrams": 500,
+        "prefixes": 50,
+        "suffixes": 50,
+        "prev_w_curr_t": 50,
+        "next_w_curr_t": 50,
+        "index_tag": 50,
+        "index_word": 50
+    },
+    "epochs": 5000,
+    "print_every": 50,
+    "reg_lambda": 1.0,
+    "beam": 5,
+    "post_processing": false,
+    "test_accuracy": 59.267550899721215
+}
