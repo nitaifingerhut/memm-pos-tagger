@@ -17,9 +17,9 @@ if __name__ == "__main__":
     opts.features_params["suffixes"] = 25
     opts.features_params["prev_w_curr_t"] = 50
     opts.features_params["next_w_curr_t"] = 50
-    opts.features_params["indextagfeatures"] = 50
-    opts.features_params["indexwordfeatures"] = 50
-    opts.features_params["capitaltagfeatures"] = 50
+    opts.features_params["index_tag"] = 50
+    opts.features_params["word_tag"] = 50
+    opts.features_params["capital_tag"] = 50
     opts.force = False
     opts.epochs = 500
     opts.post_processing = True
@@ -35,3 +35,27 @@ if __name__ == "__main__":
     memm.ds_tags = list(memm.corpus.dicts["unigrams"].keys())[:5]
     memm.ds_tags_dict = {i: k for i, k in enumerate(memm.ds_tags)}
     pred, opts.test_accuracy = memm.predict(opts.test_file, opts.beam)
+
+    with open(opts.test_file, "r") as f:
+        for i, line in enumerate(f.readlines()):
+            pairs = [tuple(s.split("_")) for s in line.split()]
+
+            sentence = list(list(zip(*pairs))[0])
+            real_tags = list(list(zip(*pairs))[1])
+
+            n = len(sentence)
+            S = ["*", "*"] + [memm.ds_tags for _ in range(n)] + ["."]
+            pi = np.zeros((n, len(memm.ds_tags), len(memm.ds_tags)))
+            bp = np.zeros((n, len(memm.ds_tags), len(memm.ds_tags)))
+            for k in range(len(n)):
+                for u in range(len(S[k + 1])):
+                    for v in range(len(S[k + 2])):
+                        for t in range(len(S[k])):
+                            tags = ()
+                            hist = History(sentence, tags, k)
+                            f = memm.features.to_vec_np(history=hist)
+                            pi[k, u, v] = max(pi[k, u, v], )
+
+            pred_line = " ".join([w + "_" + t for w, t in zip(sentence, preds)])
+            predictions.append(pred_line)
+            predictor.append_stats(real_tags, preds)
