@@ -23,7 +23,7 @@ if __name__ == "__main__":
     opts.features_params["next_w_curr_t"] = 150
     opts.features_params["index_tag"] = 150
     opts.features_params["index_word"] = 150
-    opts.features_params["capital_tag"] = 0
+    opts.features_params["capital_tag"] = 100
     opts.force = False
     opts.epochs = 500
     opts.post_processing = False
