@@ -70,7 +70,6 @@ class TriGramFeature(NGramFeature):
 
 #######################################################################
 
-
 #######################################################################
 class PreSufFeature(Feature):
     def __init__(self, chars):
@@ -100,6 +99,8 @@ class SuffixFeature(PreSufFeature):
 
 
 #######################################################################
+
+
 class IndexFeature(Feature):
     def __init__(self, params):
         self.check = params[0]
@@ -120,6 +121,13 @@ class IndexWordFeature(IndexFeature):
     def __call__(self, history: History) -> int:
         w = history.words[history.index]
         return w == self.check and history.index == self.inx
+
+
+class CapitalTagFeature(IndexFeature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        t = history.tags[-1]
+        return t == self.check and w.upper()[0] == w[0]
 
 
 #######################################################################

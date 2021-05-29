@@ -42,6 +42,7 @@ class Parser(object):
                 "next_w_curr_t": 25,
                 "index_tag": 25,
                 "index_word": 25,
+                "capital_tag": 25,
             },
         )
         parser.add_argument("--epochs", type=int, default=100)
@@ -50,7 +51,7 @@ class Parser(object):
 
         parser.add_argument("--beam", type=int, default=2, help="beam search width")
         parser.add_argument(
-            "--post-processing", default=True, action="store_true", help="set to apply post processing"
+            "--post-processing", default=False, action="store_true", help="set to apply post processing"
         )
 
         opt = parser.parse_args()

@@ -13,6 +13,7 @@ from features.feature import (
     UniGramFeature,
     IndexTagFeature,
     IndexWordFeature,
+    CapitalTagFeature,
 )
 from typing import Iterator, List
 
@@ -88,6 +89,13 @@ class Features(object):
             features.append(IndexWordFeature(index_word))
         return features
 
+    @staticmethod
+    def from_capital_tag(capital_tags):
+        features = []
+        for capital_tag in capital_tags:
+            features.append(CapitalTagFeature(capital_tag))
+        return features
+
     def __init__(self):
         self.features = []
 
@@ -102,6 +110,7 @@ class Features(object):
         self.features.extend(self.from_next_w_curr_t(data["f_next_w_curr_t"]))
         self.features.extend(self.from_index_tag(data["f_index_tag"]))
         self.features.extend(self.from_index_word(data["f_index_word"]))
+        self.features.extend(self.from_capital_tag(data["f_capital_tag"]))
         self.features.extend(list(FEATURES_DICT.values()))
 
     def __str__(self) -> str:
