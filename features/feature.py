@@ -91,7 +91,7 @@ class PrefixFeature(PreSufFeature):
 
 class SuffixFeature(PreSufFeature):
     def __call__(self, history: History):
-        w = history.words[history.index].lower
+        w = history.words[history.index].lower()
         return len(w) >= 6 and w[-self.n :] == self.chars
 
 
