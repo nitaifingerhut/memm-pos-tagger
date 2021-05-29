@@ -54,8 +54,9 @@ class FeatureExtractor(object):
             for i, line in enumerate(f.readlines()):
                 pairs = [tuple(s.split("_")) for s in line.split()]
                 words = list(zip(*pairs))[0]
-                pairs = [(w.lower(), t) for w, t in pairs]  # switch words to lower-case
-                fe.dicts["pairs"] = func("pairs", Counter(pairs))
+
+                pairs_lower = [(w.lower(), t) for w, t in pairs]  # switch words to lower-case
+                fe.dicts["pairs"] = func("pairs", Counter(pairs_lower))
 
                 unigrams = list(zip(*pairs))[1]
                 fe.dicts["unigrams"] = func("unigrams", Counter(unigrams))
