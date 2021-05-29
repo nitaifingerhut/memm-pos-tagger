@@ -50,7 +50,7 @@ class Parser(object):
 
         parser.add_argument("--beam", type=int, default=2, help="beam search width")
         parser.add_argument(
-            "--post-processing", default=False, action="store_true", help="set to apply post processing"
+            "--post-processing", default=True, action="store_true", help="set to apply post processing"
         )
 
         opt = parser.parse_args()
