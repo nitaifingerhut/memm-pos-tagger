@@ -1,5 +1,7 @@
 import json
 import pickle
+import numpy as np
+from utils.history import History
 
 from pathlib import Path
 from pos_tagger.memm import MEMM
@@ -42,7 +44,7 @@ if __name__ == "__main__":
 
             sentence = list(list(zip(*pairs))[0])
             real_tags = list(list(zip(*pairs))[1])
-
+            #forward
             n = len(sentence)
             S = ["*", "*"] + [memm.ds_tags for _ in range(n)] + ["."]
             pi = np.zeros((n, len(memm.ds_tags), len(memm.ds_tags)))
@@ -50,12 +52,37 @@ if __name__ == "__main__":
             for k in range(len(n)):
                 for u in range(len(S[k + 1])):
                     for v in range(len(S[k + 2])):
+                        bp_max = 0
                         for t in range(len(S[k])):
-                            tags = ()
+                            tags = (S[k][t], S[k+1][u], S[k+2][v])
                             hist = History(sentence, tags, k)
                             f = memm.features.to_vec_np(history=hist)
-                            pi[k, u, v] = max(pi[k, u, v], )
+                            numerator = np.exp(f @ memm.weights)
+                            denominator = 0
+                            for tag in S[k+2]:
+                                tags = (S[k][t], S[k]+1[u], tag)
+                                hist = History(sentence, tags, k)
+                                f = memm.features.to_vec_np(history=hist)
+                                denominator +=  np.exp(f @ memm.weights)
+                            prob = numerator/denominator
+                            if k == 0:
+                                if pi[k, u, v] < prob:
+                                    pi[k, u, v] = prob
+                                    bp_max = t
+                            else:
+                                if pi[k, u, v] < pi[k-1,t,u)*prob:
+                                    pi[k, u, v] = pi[k-1,t,u)*prob
+                                    bp_max = t
+            #backward
+            t = np.zeros(n).astype(int).tolist()
+            ind = np.argmax(pi[-1, :, :])
+            t[n - 2] = math.floor(ind / pi[-1, :, :].shape[0])
+            t[n - 1] = ind - t[n - 2] * pi[-1, :, :].shape[0]
+            for k in range(3, n + 1):
+                t[n - k] = bp[n - k + 2, t[n - k + 1], t[n - k + 2]].astype(int)
 
-            pred_line = " ".join([w + "_" + t for w, t in zip(sentence, preds)])
+            pred_tags = tuple([memm.tags_dict[i] for i in t])
+
+            pred_line = " ".join([w + "_" + t for w, t in zip(sentence, pred_tags)])
             predictions.append(pred_line)
             predictor.append_stats(real_tags, preds)
