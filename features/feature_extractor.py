@@ -53,6 +53,8 @@ class FeatureExtractor(object):
 
             for i, line in enumerate(f.readlines()):
                 pairs = [tuple(s.split("_")) for s in line.split()]
+                words = list(zip(*pairs))[0]
+                pairs = [(w.lower(), t) for w, t in pairs]  # switch words to lower-case
                 fe.dicts["pairs"] = func("pairs", Counter(pairs))
 
                 unigrams = list(zip(*pairs))[1]
@@ -64,39 +66,42 @@ class FeatureExtractor(object):
                 trigrams = [unigrams[i : i + 3] for i in range(len(unigrams) - 2)]
                 fe.dicts["trigrams"] = func("trigrams", Counter(trigrams))
 
-                words = list(zip(*pairs))[0]
-
                 prefixes2 = [w[:2] for w in words if len(w) >= 5]
+                prefixes2 = [w.lower() for w in prefixes2]
                 prefixes3 = [w[:3] for w in words if len(w) >= 6]
+                prefixes3 = [w.lower() for w in prefixes3]
                 prefixes4 = [w[:4] for w in words if len(w) >= 7]
-
+                prefixes4 = [w.lower() for w in prefixes4]
                 fe.dicts["prefixes"] = func("prefixes", Counter(prefixes2), Counter(prefixes3), Counter(prefixes4))
 
                 suffixes2 = [w[-2:] for w in words if len(w) >= 5]
+                suffixes2 = [w.lower() for w in suffixes2]
                 suffixes3 = [w[-3:] for w in words if len(w) >= 6]
+                suffixes3 = [w.lower() for w in suffixes3]
                 suffixes4 = [w[-4:] for w in words if len(w) >= 7]
+                suffixes4 = [w.lower() for w in suffixes4]
                 fe.dicts["suffixes"] = func("suffixes", Counter(suffixes2), Counter(suffixes3), Counter(suffixes4))
 
-                prev_w_curr_t = [(w, t) for w, t in zip(words[:-1], unigrams[1:])]
+                prev_w_curr_t = [(w.lower(), t) for w, t in zip(words[:-1], unigrams[1:])]
                 fe.dicts["prev_w_curr_t"] = func("prev_w_curr_t", Counter(prev_w_curr_t))
 
-                next_w_curr_t = [(w, t) for w, t in zip(words[1:], unigrams[:-1])]
+                next_w_curr_t = [(w.lower(), t) for w, t in zip(words[1:], unigrams[:-1])]
                 fe.dicts["next_w_curr_t"] = func("next_w_curr_t", Counter(next_w_curr_t))
 
                 index_tag1 = [(unigrams[0], 0)]
-                index_word1 = [(words[0], 0)]
+                index_word1 = [(words[0].lower(), 0)]
                 if len(words) >= 2:
                     index_tag2 = [(unigrams[1], 1)]
-                    index_word2 = [(words[1], 1)]
+                    index_word2 = [(words[1].lower(), 1)]
                 if len(words) >= 3:
                     index_tag3 = [(unigrams[2], 2)]
-                    index_word3 = [(words[2], 2)]
+                    index_word3 = [(words[2].lower(), 2)]
                 fe.dicts["index_tag"] = func("index_tag", Counter(index_tag1), Counter(index_tag2), Counter(index_tag3))
                 fe.dicts["index_word"] = func(
                     "index_word", Counter(index_word1), Counter(index_word2), Counter(index_word3)
                 )
 
-                capital_tag = [(w, t) for w, t in zip(words, unigrams)]
+                capital_tag = [(w, t) for w, t in zip(words[1:], unigrams[1:]) if w[0].upper() == w[0] and w[0].isalpha()]
                 fe.dicts["capital_tag"] = func("capital_tag", Counter(capital_tag))
 
                 print(
