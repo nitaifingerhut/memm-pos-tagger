@@ -20,5 +20,5 @@
     "reg_lambda": 1.0,
     "beam": 3,
     "post_processing": false,
-    "test_accuracy": 76.38759820900566
+    "test_accuracy": 76.39182225225986
 }
