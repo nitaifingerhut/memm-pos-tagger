@@ -29,10 +29,9 @@ if __name__ == "__main__":
     root_dir = Path("models").joinpath(opts.name).expanduser()
     root_dir.mkdir(parents=True, exist_ok=True)
     memm = MEMM(opts, root_dir)
-    with open(r"models\05-27_00-27-51\trained_weights_data_1.pkl", 'rb') as f:
+    with open(r"models\05-27_00-27-51\trained_weights_data_1.pkl", "rb") as f:
         weights = pickle.load(f)
         memm.weights = weights[0]
     memm.ds_tags = list(memm.corpus.dicts["unigrams"].keys())[:5]
     memm.ds_tags_dict = {i: k for i, k in enumerate(memm.ds_tags)}
     pred, opts.test_accuracy = memm.predict(opts.test_file, opts.beam)
-

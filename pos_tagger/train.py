@@ -17,7 +17,7 @@ class Trainer(object):
         self.num_features = num_features
 
     def randomize_weights(self):
-        return np.random.normal(size=self.num_features)
+        return np.random.normal(size=self.num_features).astype(np.float64)
 
     def linear_termps(self, weights):
         return self.true_features.dot(weights).sum()

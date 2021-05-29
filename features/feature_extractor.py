@@ -22,9 +22,9 @@ class FeatureExtractor(object):
             "suffixes": {},
             "prev_w_curr_t": {},
             "next_w_curr_t": {},
-            "indextagfeatures": {},
-            "indexwordfeatures": {},
-            "capitaltagfeatures": {},
+            "index_tag": {},
+            "index_word": {},
+            "capital_tag": {},
         }
 
     @staticmethod
@@ -66,21 +66,6 @@ class FeatureExtractor(object):
 
                 words = list(zip(*pairs))[0]
 
-                indextagfeatures1 = [(unigrams[0], 0)]
-                indexwordfeatures1 = [(words[0], 0)]
-                if len(words)>=2:
-                    indextagfeatures2 = [(unigrams[1], 1)]
-                    indexwordfeatures2 = [(words[1], 1)]
-                if len(words)>=3:
-                    indextagfeatures3 = [(unigrams[2], 2)]
-                    indexwordfeatures3 = [(words[2], 2)]
-                fe.dicts["indextagfeatures"] = func("indextagfeatures", Counter(indextagfeatures1), Counter(indextagfeatures2), Counter(indextagfeatures3))
-                fe.dicts["indexwordfeatures"] = func("indexwordfeatures", Counter(indexwordfeatures1), Counter(indexwordfeatures2), Counter(indexwordfeatures3))
-
-
-                capital_tag_features = [(w, t) for w, t in zip(words, unigrams)]
-                fe.dicts["capitaltagfeatures"] = func("capitaltagfeatures", Counter(capital_tag_features))
-
                 prefixes2 = [w[:2] for w in words if len(w) >= 5]
                 prefixes3 = [w[:3] for w in words if len(w) >= 6]
                 prefixes4 = [w[:4] for w in words if len(w) >= 7]
@@ -97,6 +82,22 @@ class FeatureExtractor(object):
 
                 next_w_curr_t = [(w, t) for w, t in zip(words[1:], unigrams[:-1])]
                 fe.dicts["next_w_curr_t"] = func("next_w_curr_t", Counter(next_w_curr_t))
+
+                index_tag1 = [(unigrams[0], 0)]
+                index_word1 = [(words[0], 0)]
+                if len(words) >= 2:
+                    index_tag2 = [(unigrams[1], 1)]
+                    index_word2 = [(words[1], 1)]
+                if len(words) >= 3:
+                    index_tag3 = [(unigrams[2], 2)]
+                    index_word3 = [(words[2], 2)]
+                fe.dicts["index_tag"] = func("index_tag", Counter(index_tag1), Counter(index_tag2), Counter(index_tag3))
+                fe.dicts["index_word"] = func(
+                    "index_word", Counter(index_word1), Counter(index_word2), Counter(index_word3)
+                )
+
+                capital_tag = [(w, t) for w, t in zip(words, unigrams)]
+                fe.dicts["capital_tag"] = func("capital_tag", Counter(capital_tag))
 
                 print(
                     f"\rFeatureExtractor  |  CORPUS = `{path.name}`  |  EXTRACTING FEATURES [{round(100. * (i + 1) / num_lines, 2)}%%]",
@@ -119,10 +120,11 @@ class FeatureExtractor(object):
         for arg, val in kwargs.items():
             if arg not in self.dicts.keys():
                 pass
-            l = len(list(self.dicts[arg].keys()))
-            temp = list(self.dicts[arg].keys())[:min(round(val*1,0),l)]
-            random.shuffle(temp)
-            self.dicts["f_" + arg] = temp[:val]
+            self.dicts["f_" + arg] = list(self.dicts[arg].keys())[:val]
+            # l = len(list(self.dicts[arg].keys()))
+            # temp = list(self.dicts[arg].keys())[:min(round(val * 1, 0), l)]
+            # random.shuffle(temp)
+            # self.dicts["f_" + arg] = temp[:val]
 
     def save(self, path: Path):
         data = {}

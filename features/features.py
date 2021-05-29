@@ -75,29 +75,29 @@ class Features(object):
             features.append(PairFeature(next_w, curr_t))
         return features
 
+    @staticmethod
+    def from_index_tag(index_tags):
+        features = []
+        for index_tag in index_tags:
+            features.append(IndexTagFeature(index_tag))
+        return features
+
+    @staticmethod
+    def from_index_word(index_words):
+        features = []
+        for index_word in index_words:
+            features.append(IndexWordFeature(index_word))
+        return features
+
+    @staticmethod
+    def from_capital_tag(capital_tags):
+        features = []
+        for capital_tag in capital_tags:
+            features.append(CapitalTagFeature(capital_tag))
+        return features
+
     def __init__(self):
         self.features = []
-
-    @staticmethod
-    def from_indextagfeature(indextagfeatures):
-        features = []
-        for indextagfeature in indextagfeatures:
-            features.append(IndexTagFeature(indextagfeature))
-        return features
-
-    @staticmethod
-    def from_indexwordfeature(indexwordfeatures):
-        features = []
-        for indexwordfeature in indexwordfeatures:
-            features.append(IndexWordFeature(indexwordfeature))
-        return features
-
-    @staticmethod
-    def from_capitaltagfeature(capitaltagfeatures):
-        features = []
-        for capitaltagfeature in capitaltagfeatures:
-            features.append(CapitalTagFeature(capitaltagfeature))
-        return features
 
     def from_data(self, data):
         self.features.extend(self.from_pairs(data["f_pairs"]))
@@ -108,9 +108,9 @@ class Features(object):
         self.features.extend(self.from_suffixes(data["f_suffixes"]))
         self.features.extend(self.from_prev_w_curr_t(data["f_prev_w_curr_t"]))
         self.features.extend(self.from_next_w_curr_t(data["f_next_w_curr_t"]))
-        self.features.extend(self.from_indextagfeature(data["f_indextagfeatures"]))
-        self.features.extend(self.from_indexwordfeature(data["f_indexwordfeatures"]))
-        self.features.extend(self.from_capitaltagfeature(data["f_capitaltagfeatures"]))
+        self.features.extend(self.from_index_tag(data["f_index_tag"]))
+        self.features.extend(self.from_index_word(data["f_index_word"]))
+        self.features.extend(self.from_capital_tag(data["f_capital_tag"]))
         self.features.extend(list(FEATURES_DICT.values()))
 
     def __str__(self) -> str:
@@ -144,7 +144,7 @@ class Features(object):
         vec = []
         for f in self.features:
             vec.append(f(history))
-        return csr_matrix(vec, dtype=bool)
+        return csr_matrix(vec, dtype=np.uint8)
 
     def to_vec_np(self, history: History):
         vec = []

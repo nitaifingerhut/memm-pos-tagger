@@ -100,23 +100,28 @@ class SuffixFeature(PreSufFeature):
 
 #######################################################################
 
+
 class IndexFeature(Feature):
-    def __init__(self, prams):
-        self.check = prams[0]
-        self.inx = prams[1]
+    def __init__(self, params):
+        self.check = params[0]
+        self.inx = params[1]
+
     def __str__(self):
         tags_str = self.check + ", " + str(self.inx)
         return self.__class__.__name__ + ": " + tags_str
+
 
 class IndexTagFeature(IndexFeature):
     def __call__(self, history: History) -> int:
         t = history.tags[-1]
         return t == self.check and history.index == self.inx
 
+
 class IndexWordFeature(IndexFeature):
     def __call__(self, history: History) -> int:
         w = history.words[history.index]
         return w == self.check and history.index == self.inx
+
 
 class CapitalTagFeature(IndexFeature):
     def __call__(self, history: History) -> int:
