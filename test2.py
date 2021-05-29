@@ -27,7 +27,7 @@ if __name__ == "__main__":
     opts.force = False
     opts.epochs = 500
     opts.post_processing = False
-    opts.beam = 2
+    opts.beam = 0
     opts.dot = 1.5
 
     root_dir = Path("models").joinpath(opts.name).expanduser()
@@ -71,11 +71,11 @@ if __name__ == "__main__":
                             if k == 0:
                                 if pi[k, u, v] < prob:
                                     pi[k, u, v] = prob
-                                    bp[k, u, v] = t
+                                    bp_max = t
                             else:
                                 if pi[k, u, v] < pi[k-1,t,u]*prob:
                                     pi[k, u, v] = pi[k-1,t,u]*prob
-                                    bp[k, u, v] = t
+                                    bp_max = t
             #backward
             t = np.zeros(n).astype(int).tolist()
             ind = np.argmax(pi[-1, :, :])

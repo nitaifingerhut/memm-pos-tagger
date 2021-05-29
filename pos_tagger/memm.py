@@ -32,6 +32,8 @@ class MEMM(object):
         self.ds_name = self.train_file.stem
         self.ds_index = int(self.ds_name[-1])
 
+        self.post_processing = opts.post_processing
+
     def fit(self, opts: argparse.ArgumentParser):
         dataset = DatasetCreator(self.train_file, self.features, self.ds_tags)
         true_features = dataset.to_features()
@@ -62,7 +64,7 @@ class MEMM(object):
                 sentence = list(list(zip(*pairs))[0])
                 real_tags = list(list(zip(*pairs))[1])
 
-                preds = predictor.predict(sentence, True)
+                preds = predictor.predict(sentence, self.post_processing)
 
                 pred_line = " ".join([w + "_" + t for w, t in zip(sentence, preds)])
                 predictions.append(pred_line)
