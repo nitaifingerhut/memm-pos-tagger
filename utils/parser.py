@@ -40,6 +40,9 @@ class Parser(object):
                 "suffixes": 25,
                 "prev_w_curr_t": 25,
                 "next_w_curr_t": 25,
+                "index_tag": 25,
+                "index_word": 25,
+                "capital_tag": 25,
             },
         )
         parser.add_argument("--epochs", type=int, default=100)

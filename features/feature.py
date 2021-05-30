@@ -30,7 +30,7 @@ class PairFeature(object):
 
     @abc.abstractmethod
     def __call__(self, history: History) -> int:
-        return history.words[history.index] == self.word and history.tags[-1] == self.tag
+        return history.words[history.index].lower() == self.word and history.tags[-1] == self.tag
 
     def __str__(self):
         pair_str = f"word = {self.word}, tag = {self.tag}"
@@ -85,14 +85,49 @@ class PreSufFeature(Feature):
 
 class PrefixFeature(PreSufFeature):
     def __call__(self, history: History):
-        w = history.words[history.index]
+        w = history.words[history.index].lower()
         return len(w) >= 6 and w[: self.n] == self.chars
 
 
 class SuffixFeature(PreSufFeature):
     def __call__(self, history: History):
-        w = history.words[history.index]
+        w = history.words[history.index].lower()
         return len(w) >= 6 and w[-self.n :] == self.chars
+
+
+#######################################################################
+
+
+#######################################################################
+
+
+class IndexFeature(Feature):
+    def __init__(self, params):
+        self.check = params[0]
+        self.inx = params[1]
+
+    def __str__(self):
+        tags_str = self.check + ", " + str(self.inx)
+        return self.__class__.__name__ + ": " + tags_str
+
+
+class IndexTagFeature(IndexFeature):
+    def __call__(self, history: History) -> int:
+        t = history.tags[-1]
+        return t == self.check and history.index == self.inx
+
+
+class IndexWordFeature(IndexFeature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index].lower()
+        return w == self.check and history.index == self.inx
+
+
+class CapitalTagFeature(IndexFeature):
+    def __call__(self, history: History) -> int:
+        w = history.words[history.index]
+        t = history.tags[-1]
+        return t == self.check and w.upper()[0] == w[0]
 
 
 #######################################################################

@@ -1,0 +1,25 @@
+{
+    "train_file": "assets/train1.wtag",
+    "force": false,
+    "test_file": "assets/test1.wtag",
+    "name": "mid_l_0.1_b_3",
+    "features_params": {
+        "pairs": 250,
+        "unigrams": 50,
+        "bigrams": 500,
+        "trigrams": 1000,
+        "prefixes": 250,
+        "suffixes": 250,
+        "prev_w_curr_t": 250,
+        "next_w_curr_t": 250,
+        "index_tag": 250,
+        "index_word": 250,
+        "capital_tag": 250
+    },
+    "epochs": 5000,
+    "print_every": 50,
+    "reg_lambda": 0.1,
+    "beam": 3,
+    "post_processing": false,
+    "test_accuracy": 72.34096477147926
+}
