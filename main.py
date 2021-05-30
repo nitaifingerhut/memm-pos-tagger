@@ -21,3 +21,6 @@ if __name__ == "__main__":
         opts.train_file = opts.train_file.as_posix()
         opts.test_file = opts.test_file.as_posix()
         json.dump(vars(opts), f, indent=4)
+
+    memm.predict_comp("assets/comp1.words", opts.beam)
+    memm.predict_comp("assets/comp2.words", opts.beam)

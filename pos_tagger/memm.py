@@ -39,7 +39,7 @@ class MEMM(object):
         true_features = dataset.to_features()
         list_features = dataset.process()
         trainer = Trainer(true_features, list_features, reg_lambda=opts.reg_lambda, num_features=len(self.features))
-        optimal_params = trainer.optimize(epochs=opts.epochs, print_every=opts.print_every)
+        optimal_params = trainer.optimize(epochs=opts.epochs, print_every=opts.print_every, eps=opts.epsilon)
         self.weights = optimal_params[0]
 
         w_path = self.dir.joinpath(f"trained_weights_data_{self.ds_index}.pkl")
@@ -49,9 +49,6 @@ class MEMM(object):
     def predict(self, test_file, beam: int = 2):
 
         predictor = Predictor(self.weights, self.features, self.ds_tags_dict, beam=beam)
-
-        n_tags = len(self.ds_tags)
-        confusion = np.zeros(shape=(n_tags, n_tags), dtype=np.int32)
 
         predictions = []
         num_lines = sum(1 for _ in open(test_file))
@@ -92,3 +89,28 @@ class MEMM(object):
         plt.close()
 
         return predictions, accuracy
+
+    def predict_comp(self, test_file, beam: int = 2):
+        predictor = Predictor(self.weights, self.features, self.ds_tags_dict, beam=beam)
+
+        predictions = []
+        num_lines = sum(1 for _ in open(test_file))
+        with open(test_file, "r") as f:
+
+            for i, line in enumerate(f.readlines()):
+
+                pairs = [tuple(s.split("_")) for s in line.split()]
+                sentence = list(list(zip(*pairs))[0])
+                preds = predictor.predict(sentence, self.post_processing)
+
+                pred_line = " ".join([w + "_" + t for w, t in zip(sentence, preds)])
+                predictions.append(pred_line)
+
+                print(
+                    f"\rPREDICTING  |  CORPUS = `{test_file.name}` [{round(100. * (i + 1) / num_lines, 2)}%%]", end=""
+                )
+            print()
+
+        w_path = self.dir.joinpath(f"{test_file.stem}.wtag")
+        with open(w_path, "w") as f:
+            f.writelines("\n".join(predictions))
