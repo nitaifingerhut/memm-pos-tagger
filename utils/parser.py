@@ -48,6 +48,7 @@ class Parser(object):
         parser.add_argument("--epochs", type=int, default=100)
         parser.add_argument("--print-every", type=int, default=50)
         parser.add_argument("--reg-lambda", type=float, default=0.01)
+        parser.add_argument("--epsilon", type=float, default=1e-8)
 
         parser.add_argument("--beam", type=int, default=2, help="beam search width")
         parser.add_argument(
