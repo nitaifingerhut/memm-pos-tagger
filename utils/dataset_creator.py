@@ -37,18 +37,17 @@ class DatasetCreator(object):
                     history = History(words, curr_tags, i)
                     features.append(self.features.to_vec(history))
 
-            #     print(
-            #         f"DatasetCreator  |  CORPUS = `{self.path.name}` [{round(percentage, 2):<5}%%]  |  TAG = {tag:<4} [{round(100. * (q + 1) / self.num_lines, 2)}%%]\r",
-            #         end="",
-            #     )
-            # print()
+                print(
+                    f"DatasetCreator  |  CORPUS = `{self.path.name}` [{round(percentage, 2):<5}%%]  |  TAG = {tag:<4} [{round(100. * (q + 1) / self.num_lines, 2)}%%]\r",
+                    end="",
+                )
+            print()
 
         return vstack(features)
 
     def process(self):
         ds = []
         for i, t in enumerate(self.ds_tags):
-            print(f"DatasetCreator  |  CORPUS = `{self.path.name}` [{round(100 * i / self.n_ds_tags, 2):<5}%%]")
             ds.append(self.to_features(t, 100 * i / self.n_ds_tags))
         print(f"DatasetCreator  |  CORPUS = `{self.path.name}` [{round(100.00, 2):<5}%%]")
         return ds
