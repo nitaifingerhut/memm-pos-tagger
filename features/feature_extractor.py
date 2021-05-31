@@ -102,7 +102,9 @@ class FeatureExtractor(object):
                     "index_word", Counter(index_word1), Counter(index_word2), Counter(index_word3)
                 )
 
-                capital_tag = [(w, t) for w, t in zip(words[1:], unigrams[1:]) if w[0].upper() == w[0] and w[0].isalpha()]
+                capital_tag = [
+                    (w, t) for w, t in zip(words[1:], unigrams[1:]) if w[0].upper() == w[0] and w[0].isalpha()
+                ]
                 fe.dicts["capital_tag"] = func("capital_tag", Counter(capital_tag))
 
                 print(

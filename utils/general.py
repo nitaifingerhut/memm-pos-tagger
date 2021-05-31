@@ -41,6 +41,32 @@ NUMBERS = (
 )
 
 
+PERSONAL_PRONOUNS = (
+    "it",
+    "you",
+    "i",
+    "me",
+    "myself",
+    "he",
+    "him",
+    "himself",
+    "she",
+    "herself",
+    "we",
+    "us",
+    "ourselves",
+    "who",
+    "whom",
+    "they",
+    "them",
+    "themself",
+    "themselves",
+)
+
+
+POSSESSIVE_PRONOUNS = ("my", "your", "his", "her", "its", "our", "their")
+
+
 PUNCTUATION = {
     ".": ".",
     "#": "#",
@@ -52,4 +78,5 @@ PUNCTUATION = {
     "$": "$",
     "--": ":",
     ":": ":",
+    "-RRB-": "-RRB-",
 }

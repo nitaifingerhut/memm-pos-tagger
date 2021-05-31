@@ -5,7 +5,7 @@ import warnings
 from features.features import Features
 from typing import Dict, List, Tuple
 from utils.history import History
-from utils.general import is_digit, NUMBERS, PUNCTUATION
+from utils.general import is_digit, NUMBERS, PERSONAL_PRONOUNS, POSSESSIVE_PRONOUNS, PUNCTUATION
 
 
 class Predictor(object):
@@ -98,7 +98,7 @@ class Predictor(object):
                 to_calc[c[:, 0], c[:, 1]] = 1
         # backward
         t = np.zeros(n).astype(int).tolist()
-        # argmax change the matric into vector and then returns the ind of the max
+        # argmax change the metric into vector and then returns the ind of the max
         ind = np.argmax(pi[-1, :, :])
         # calc the row of the argmax
         t[n - 2] = math.floor(ind / pi[-1, :, :].shape[0])
@@ -116,5 +116,9 @@ class Predictor(object):
                 t = PUNCTUATION[w]
             if is_digit(w) or w in NUMBERS:
                 t = "CD"
+            if w.lower() in PERSONAL_PRONOUNS:
+                t = "PRP"
+            if w.lower() in POSSESSIVE_PRONOUNS:
+                t = "PRP$"
             processed_tags += (t,)
         return processed_tags

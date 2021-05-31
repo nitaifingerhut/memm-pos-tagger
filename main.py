@@ -22,5 +22,5 @@ if __name__ == "__main__":
         opts.test_file = opts.test_file.as_posix()
         json.dump(vars(opts), f, indent=4)
 
-    memm.predict_comp("assets/comp1.words", opts.beam)
-    memm.predict_comp("assets/comp2.words", opts.beam)
+    memm.predict_no_gt(Path("assets/comp1.words").absolute(), opts.beam)
+    memm.predict_no_gt(Path("assets/comp2.words").absolute(), opts.beam)
