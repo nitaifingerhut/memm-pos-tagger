@@ -75,5 +75,5 @@ class Trainer(object):
     def optimize(self, w_0: np.ndarray = None, epochs: int = 1000, print_every: int = 50, eps: float = 1e-8):
         if w_0 is None:
             w_0 = self.randomize_weights()
-        optimal_params = fmin_l_bfgs_b(func=self.calc_objective_per_iter, x0=w_0, maxiter=epochs, iprint=print_every, epsilon=eps)
+        optimal_params = fmin_l_bfgs_b(func=self.calc_objective_per_iter, x0=w_0, maxiter=epochs, disp=print_every, epsilon=eps)
         return optimal_params
