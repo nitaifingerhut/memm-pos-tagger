@@ -89,7 +89,7 @@ class MEMM(object):
 
         return predictions, accuracy
 
-    def predict_comp(self, test_file, beam: int = 2):
+    def predict_no_gt(self, test_file, beam: int = 2):
         predictor = Predictor(self.weights, self.features, self.ds_tags_dict, beam=beam)
 
         predictions = []
