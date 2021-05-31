@@ -58,3 +58,21 @@ class Parser(object):
         opt = parser.parse_args()
 
         return opt
+
+    @staticmethod
+    def predict():
+        """
+        Parse command-line arguments
+        :return: argparser object with user opts.
+        """
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--train-file", type=Path, default=Path("assets/train1.wtag"))
+        parser.add_argument("--force", default=False, action="store_true", help="force processing train file")
+        parser.add_argument(
+            "--name", type=str, default=datetime.now().strftime("%m-%d_%H-%M-%S"), help="name",
+        )
+        parser.add_argument("--beam", type=int, default=2, help="beam search width")
+
+        opt = parser.parse_args()
+
+        return opt

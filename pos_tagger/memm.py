@@ -71,7 +71,7 @@ class MEMM(object):
                 )
             print()
 
-        accuracy, confusion = predictor.get_stats()
+        accuracy, confusion, ticks = predictor.get_stats()
         print(f"\rPREDICTING  |  CORPUS = `{test_file.name}` |  ACCURACY {accuracy :.2f}%")
 
         w_path = self.dir.joinpath(f"{test_file.stem}.wtag")
@@ -79,9 +79,9 @@ class MEMM(object):
             f.writelines("\n".join(predictions))
 
         w_path = self.dir.joinpath(f"{test_file.stem}_confusion.pdf")
-        plt.figure(figsize=(15, 15))
+        plt.figure(figsize=(7.5, 7.5))
         sns.heatmap(
-            confusion, annot=False, cmap="Blues", xticklabels=self.ds_tags, yticklabels=self.ds_tags,
+            confusion, annot=False, cmap="Blues", xticklabels=ticks, yticklabels=ticks,
         )
         plt.tight_layout()
         plt.savefig(w_path)
@@ -113,3 +113,5 @@ class MEMM(object):
         w_path = self.dir.joinpath(f"{test_file.stem}.wtag")
         with open(w_path, "w") as f:
             f.writelines("\n".join(predictions))
+
+        return predictions

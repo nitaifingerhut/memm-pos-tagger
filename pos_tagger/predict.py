@@ -36,11 +36,11 @@ class Predictor(object):
             self.confusion[real_ind, pred_ind] += 1
             self.confusion[pred_ind, real_ind] += 1
 
-    def get_stats(self):
+    def get_stats(self, slice: int = 10):
         num_correct = np.trace(self.confusion)
         num_samples = np.sum(self.confusion)
         accuracy = 100.0 * num_correct / num_samples
-        return accuracy, self.confusion
+        return accuracy, self.confusion[:slice, :slice], self.tags[:slice]
 
     def largest_indices(self, p):
         idx = np.argsort(p.ravel())[: -self.beam - 1 : -1]
