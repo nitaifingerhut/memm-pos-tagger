@@ -1,0 +1,25 @@
+{
+    "train_file": "assets/train2.wtag",
+    "force": false,
+    "test_file": "assets/test1.wtag",
+    "name": "final_2_small",
+    "features_params": {
+        "pairs": 100,
+        "unigrams": 50,
+        "bigrams": 100,
+        "trigrams": 250,
+        "prefixes": 25,
+        "suffixes": 25,
+        "prev_w_curr_t": 25,
+        "next_w_curr_t": 25,
+        "index_tag": 25,
+        "index_word": 25,
+        "capital_tag": 25
+    },
+    "epochs": 10000,
+    "print_every": 50,
+    "reg_lambda": 0.1,
+    "epsilon": 1e-12,
+    "beam": 2,
+    "post_processing": true
+}
