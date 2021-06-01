@@ -6,7 +6,7 @@ from pos_tagger.memm import MEMM
 from utils.parser import Parser
 
 
-OPTIMAL_MODEL_PATH = Path("models/heavy_l_0.01_b_3").absolute()
+OPTIMAL_MODEL_PATH = Path("models/final_2").absolute()
 
 
 if __name__ == "__main__":

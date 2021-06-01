@@ -34,7 +34,7 @@ class Predictor(object):
         pred_indices = [self.reverse_tags_dict[t] for t in pred]
         for real_ind, pred_ind in zip(real_indices, pred_indices):
             self.confusion[real_ind, pred_ind] += 1
-            self.confusion[pred_ind, real_ind] += 1
+            # self.confusion[pred_ind, real_ind] += 1
 
     def get_stats(self, slice: int = 10):
         num_correct = np.trace(self.confusion)
