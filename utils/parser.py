@@ -67,6 +67,7 @@ class Parser(object):
         """
         parser = argparse.ArgumentParser()
         parser.add_argument("--train-file", type=Path, default=Path("assets/train1.wtag"))
+        parser.add_argument("--comp-file-name", type=str, default="comp1", choices=("comp1, comp2"))
         parser.add_argument("--force", default=False, action="store_true", help="force processing train file")
         parser.add_argument(
             "--name", type=str, default=datetime.now().strftime("%m-%d_%H-%M-%S"), help="name",
